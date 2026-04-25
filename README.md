@@ -35,14 +35,14 @@ Designed with scalability and performance in mind, the system leverages **queue-
 
 ## 📁 Project Structure
 - video-downloader/
--├── src/
--│ ├── routes/ # API routes
--│ ├── services/
--│ │ ├── downloader.js # yt-dlp integration
--│ │ ├── queue.js # Queue & worker logic
--│ │ └── cleaner.js # Temp file cleanup
--│ ├── middleware/ # Validation & rate limiting
--│ └── app.js # Application entry point
--├── public/ # Optional frontend
--├── temp/ # Temporary downloads (ignored)
--└── package.json
+- ├── src/
+- │ ├── routes/ # API routes
+- │ ├── services/
+- │ │ ├── downloader.js # yt-dlp integration
+- │ │ ├── queue.js # Queue & worker logic
+- │ │ └── cleaner.js # Temp file cleanup
+- │ ├── middleware/ # Validation & rate limiting
+- │ └── app.js # Application entry point
+- ├── public/ # Optional frontend
+- ├── temp/ # Temporary downloads (ignored)
+- └── package.json
