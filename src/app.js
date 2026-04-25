@@ -4,12 +4,15 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 const fs = require('fs');
+const dotenv= require('dotenv');
 
+
+dotenv.config()
 const downloadRoutes = require('./routes/download');
 const { cleanOldFiles } = require('./services/cleaner');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 // ── Security Middleware ─────────────────────────────────────────
 app.use(helmet({
