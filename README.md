@@ -30,7 +30,7 @@ A scalable backend service built with **Node.js** and **Express** that allows us
 ---
 
 ## 📁 Project Structure
-<img width="1440" height="1160" alt="image" src="https://github.com/user-attachments/assets/2c6a024b-b7ab-4221-bccb-4df6ae9b4274" />
+<img width="144" height="116" alt="image" src="https://github.com/user-attachments/assets/2c6a024b-b7ab-4221-bccb-4df6ae9b4274" />
 
 ## 📁 Project Setup
 
