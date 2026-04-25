@@ -30,3 +30,20 @@ A scalable backend service built with **Node.js** and **Express** that allows us
 ---
 
 ## 📁 Project Structure
+<img width="1440" height="1160" alt="image" src="https://github.com/user-attachments/assets/2c6a024b-b7ab-4221-bccb-4df6ae9b4274" />
+
+## 📁 Project Setup
+
+video-downloader/
+├── src/
+│   ├── routes/          # Express routes
+│   ├── services/
+│   │   ├── downloader.js   # yt-dlp wrapper
+│   │   ├── queue.js        # BullMQ setup
+│   │   └── cleaner.js      # temp file cleanup
+│   ├── middleware/      # rate limiter, validator
+│   └── app.js
+├── public/              # frontend HTML/JS
+├── temp/                # downloaded files (gitignored)
+└── package.json
+
