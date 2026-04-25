@@ -1,49 +1,48 @@
 # 🎬 Video Downloader API
 
-A scalable backend service built with **Node.js** and **Express** that allows users to fetch video metadata and download videos in multiple qualities (360p–1080p) as a **single file with audio**.
+A production-ready backend service built with **Node.js** and **Express** that enables users to fetch video metadata and download videos in multiple qualities (360p–1080p) as a **single file with audio**.
+
+Designed with scalability and performance in mind, the system leverages **queue-based processing**, **rate limiting**, and **optimized download strategies** for reliable and efficient operation.
 
 ---
 
-## 🚀 Features
+## 🚀 Key Features
 
-- 🎥 Download videos with audio (single file, no merging issues)
-- 🎚️ Quality selection (360p, 480p, 720p, 1080p, auto)
-- ⚡ Optimized download speed (parallel fragments + retries)
-- 📊 Real-time progress tracking
-- 🔄 Background job processing using BullMQ
-- 🧠 Redis + in-memory fallback queue
-- 🔐 Security middleware (Helmet, CORS, Rate Limiting)
-- 🧹 Auto cleanup of old files
-- 🌐 Supports multiple platforms (YouTube, Instagram, Twitter, etc.)
-- ☁️ Deployable on Railway
+- 🎥 Download videos with **audio included (single file)**
+- 🎚️ Quality selection: `360p`, `480p`, `720p`, `1080p`, `auto`
+- ⚡ Optimized download performance (parallel fragments + retries)
+- 📊 Real-time progress tracking via job status API
+- 🔄 Background job processing using **BullMQ**
+- 🧠 Redis-backed queue with **in-memory fallback**
+- 🔐 Security layer with **Helmet, CORS, and Rate Limiting**
+- 🧹 Automatic cleanup of temporary files
+- 🌐 Multi-platform support (YouTube, Instagram, Twitter, etc.)
+- ☁️ Cloud deployment ready (Railway)
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Backend:** Node.js, Express
-- **Queue:** BullMQ, Redis
-- **Downloader:** yt-dlp-exec
-- **Utilities:** UUID, FS, Path
-- **Security:** Helmet, Express Rate Limit, CORS
+| Category      | Technology |
+|--------------|-----------|
+| Backend       | Node.js, Express |
+| Queue System  | BullMQ, Redis |
+| Downloader    | yt-dlp-exec |
+| Security      | Helmet, CORS, express-rate-limit |
+| Utilities     | UUID, FS, Path |
 
 ---
 
 ## 📁 Project Structure
-<img width="144" height="116" alt="image" src="https://github.com/user-attachments/assets/2c6a024b-b7ab-4221-bccb-4df6ae9b4274" />
-
-## 📁 Project Setup
-
-video-downloader/
-├── src/
-│   ├── routes/          # Express routes
-│   ├── services/
-│   │   ├── downloader.js   # yt-dlp wrapper
-│   │   ├── queue.js        # BullMQ setup
-│   │   └── cleaner.js      # temp file cleanup
-│   ├── middleware/      # rate limiter, validator
-│   └── app.js
-├── public/              # frontend HTML/JS
-├── temp/                # downloaded files (gitignored)
-└── package.json
-
+- video-downloader/
+-├── src/
+-│ ├── routes/ # API routes
+-│ ├── services/
+-│ │ ├── downloader.js # yt-dlp integration
+-│ │ ├── queue.js # Queue & worker logic
+-│ │ └── cleaner.js # Temp file cleanup
+-│ ├── middleware/ # Validation & rate limiting
+-│ └── app.js # Application entry point
+-├── public/ # Optional frontend
+-├── temp/ # Temporary downloads (ignored)
+-└── package.json
