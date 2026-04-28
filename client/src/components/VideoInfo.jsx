@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './VideoInfo.module.css';
 
 function formatDuration(seconds) {
   if (!seconds) return '--';
@@ -26,74 +25,121 @@ function formatViews(n) {
   return `${n} views`;
 }
 
-const QUALITY_ORDER = ['2160p', '1440p', '1080p', '720p', '480p', '360p', '240p', '144p'];
-
 export default function VideoInfo({ info, selectedFormat, onSelectFormat, onDownload }) {
-  // Grouped: video formats + audio-only
-  const videoFormats = info.formats
-    .filter(f => f.hasVideo)
-    .slice(0, 8);
+  const videoFormats = info.formats.filter(f => f.hasVideo).slice(0, 8);
 
-  const audioFormat = { id: 'audio', quality: 'Audio only (MP3)', ext: 'mp3', hasAudio: true, hasVideo: false };
+  const audioFormat = {
+    id: 'audio',
+    quality: 'Audio only (MP3)',
+    ext: 'mp3',
+    hasAudio: true,
+    hasVideo: false
+  };
+
   const allFormats = [...videoFormats, audioFormat];
 
   return (
-    <div className={`${styles.card} animate-slide-in`}>
-      {/* ── Thumbnail + meta ─────────────────────── */}
-      <div className={styles.meta}>
+    <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur animate-slide-in space-y-6">
+
+      {/* ── Meta Section ── */}
+      <div className="flex flex-col sm:flex-row gap-4">
+
+        {/* Thumbnail */}
         {info.thumbnail && (
-          <div className={styles.thumbWrap}>
-            <img src={info.thumbnail} alt={info.title} className={styles.thumb} />
-            <div className={styles.duration}>{formatDuration(info.duration)}</div>
+          <div className="relative w-full sm:w-48 shrink-0">
+            <img
+              src={info.thumbnail}
+              alt={info.title}
+              className="w-full h-28 object-cover rounded-xl"
+            />
+            <div className="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-2 py-0.5 rounded">
+              {formatDuration(info.duration)}
+            </div>
           </div>
         )}
-        <div className={styles.metaText}>
-          <div className={styles.platform}>{info.platform}</div>
-          <h2 className={styles.title}>{info.title}</h2>
-          <div className={styles.metaRow}>
-            {info.uploader && <span className={styles.chip}>{info.uploader}</span>}
-            {info.viewCount && <span className={styles.chip}>{formatViews(info.viewCount)}</span>}
+
+        {/* Text */}
+        <div className="flex-1">
+          <div className="text-xs text-purple-400 font-medium mb-1">
+            {info.platform}
+          </div>
+
+          <h2 className="text-lg font-semibold text-white line-clamp-2">
+            {info.title}
+          </h2>
+
+          <div className="flex flex-wrap gap-2 mt-2 text-xs">
+            {info.uploader && (
+              <span className="bg-white/10 px-2 py-1 rounded-full text-gray-300">
+                {info.uploader}
+              </span>
+            )}
+            {info.viewCount && (
+              <span className="bg-white/10 px-2 py-1 rounded-full text-gray-300">
+                {formatViews(info.viewCount)}
+              </span>
+            )}
           </div>
         </div>
       </div>
 
-      {/* ── Format picker ─────────────────────────── */}
-      <div className={styles.section}>
-        <div className={styles.sectionLabel}>Choose format & quality</div>
-        <div className={styles.formats}>
-          {allFormats.map(f => {
+      {/* ── Format Picker ── */}
+      <div>
+        <div className="text-sm text-gray-400 mb-3">
+          Choose format & quality
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {allFormats.map((f) => {
             const isSelected = selectedFormat === f.id;
+
             return (
               <button
                 key={f.id}
-                className={`${styles.formatBtn} ${isSelected ? styles.selected : ''}`}
                 onClick={() => onSelectFormat(f.id)}
+                className={`flex flex-col items-start gap-1 p-3 rounded-xl border text-sm transition
+                ${isSelected
+                  ? 'bg-purple-500/20 border-purple-500 text-white'
+                  : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10'}`}
               >
-                <span className={styles.fIcon}>
+                {/* Icon */}
+                <span className="text-gray-400">
                   {f.hasVideo ? (
                     <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      <path strokeLinecap="round" strokeLinejoin="round"
+                        d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                     </svg>
                   ) : (
                     <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                      <path strokeLinecap="round" strokeLinejoin="round"
+                        d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                     </svg>
                   )}
                 </span>
-                <span className={styles.fLabel}>{f.quality}</span>
-                {f.ext && <span className={styles.fExt}>.{f.ext}</span>}
-                {f.filesize && <span className={styles.fSize}>{formatSize(f.filesize)}</span>}
-                {f.fps && <span className={styles.fFps}>{f.fps}fps</span>}
+
+                {/* Quality */}
+                <span className="font-medium">{f.quality}</span>
+
+                {/* Extra info */}
+                <div className="flex flex-wrap gap-1 text-xs text-gray-400">
+                  {f.ext && <span>.{f.ext}</span>}
+                  {f.filesize && <span>{formatSize(f.filesize)}</span>}
+                  {f.fps && <span>{f.fps}fps</span>}
+                </div>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* ── Download button ───────────────────────── */}
-      <button className={styles.downloadBtn} onClick={onDownload}>
+      {/* ── Download Button ── */}
+      <button
+        onClick={onDownload}
+        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:opacity-90 transition"
+      >
         <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          <path strokeLinecap="round" strokeLinejoin="round"
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
         </svg>
         Download
       </button>
